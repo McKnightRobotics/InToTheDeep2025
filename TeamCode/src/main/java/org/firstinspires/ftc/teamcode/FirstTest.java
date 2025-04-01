@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
 @TeleOp(name="FirstTest")
@@ -13,6 +14,7 @@ public class FirstTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //Init
+        Arm arm = new Arm(hardwareMap);
         DcMotorEx frontLeft = hardwareMap.get(DcMotorEx.class,"frontLeft");
         DcMotorEx backLeft = hardwareMap.get(DcMotorEx.class,"backLeft");
         DcMotorEx frontRight = hardwareMap.get(DcMotorEx.class,"frontRight");
@@ -23,7 +25,7 @@ public class FirstTest extends LinearOpMode {
         linearSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearSlide.setTargetPosition(linearSlide.getCurrentPosition());
         linearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        linearSlide.setPower(0.5);
+        linearSlide.setPower(1);
 
 
 
@@ -44,15 +46,33 @@ public class FirstTest extends LinearOpMode {
             double rotate = -gamepad1.right_stick_x;
             double strafe = gamepad1.left_stick_x;
 
-
+            // movement controls
             frontLeft.setPower(forward + rotate - strafe);
             frontRight.setPower(forward - rotate - strafe);
             backLeft.setPower(forward + rotate + strafe);
             backRight.setPower(forward - rotate + strafe);
 
+            // linear slide controls
             double linearSlideControl = gamepad1.left_trigger - gamepad1.right_trigger;
-            linearSlide.setTargetPosition(linearSlide.getCurrentPosition() + (int) linearSlideControl);
+            linearSlide.setTargetPosition(linearSlide.getCurrentPosition() + (int) (100*linearSlideControl));
+
+
+            if (gamepad1.left_bumper) {
+                arm.moveArmUp();
+            }
+            else if (gamepad1.right_bumper) {
+                arm.moveArmDown();
+            }
+
+
+            telemetry.addLine(arm.toString());
+            telemetry.update();
         }
+
+
+
+
+
 
     }
 }

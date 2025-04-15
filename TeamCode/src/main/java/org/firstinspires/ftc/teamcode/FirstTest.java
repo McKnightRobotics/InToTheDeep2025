@@ -15,6 +15,7 @@ public class FirstTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Init
         Arm arm = new Arm(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
         DcMotorEx frontLeft = hardwareMap.get(DcMotorEx.class,"frontLeft");
         DcMotorEx backLeft = hardwareMap.get(DcMotorEx.class,"backLeft");
         DcMotorEx frontRight = hardwareMap.get(DcMotorEx.class,"frontRight");
@@ -57,6 +58,7 @@ public class FirstTest extends LinearOpMode {
             linearSlide.setTargetPosition(linearSlide.getCurrentPosition() + (int) (100*linearSlideControl));
 
 
+            // Arm input.
             if (gamepad1.left_bumper) {
                 arm.moveArmUp();
             }
@@ -64,8 +66,20 @@ public class FirstTest extends LinearOpMode {
                 arm.moveArmDown();
             }
 
+            // Claw input.
+            if (gamepad1.dpad_up) {
+                claw.moveUp();
+            }
+            else if (gamepad1.dpad_down) {
+                claw.moveDown();
+            }
+            else if (gamepad1.y) {
+                claw.toggle();
+            }
+
 
             telemetry.addLine(arm.toString());
+            telemetry.addLine(claw.toString());
             telemetry.update();
         }
 

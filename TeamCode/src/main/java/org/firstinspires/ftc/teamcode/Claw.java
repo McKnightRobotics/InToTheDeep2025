@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Claw {
     boolean isOpen;
     Servo claw;
-    double openPos = 1;
-    double closedPos = 0;
+    double openPos = 0.5;
+    double closedPos = 1;
     public Claw(HardwareMap HW) {
         claw = HW.get(Servo.class,"claw");
     }

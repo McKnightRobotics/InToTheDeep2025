@@ -67,48 +67,48 @@ public final class TuningOpModes {
                 .build();
     }
 
-    private static PinpointView makePinpointView(PinpointLocalizer pl) {
-        return new PinpointView() {
-            GoBildaPinpointDriver.EncoderDirection parDirection = pl.initialParDirection;
-            GoBildaPinpointDriver.EncoderDirection perpDirection = pl.initialPerpDirection;
-
-            @Override
-            public void update() {
-                pl.driver.update();
-            }
-
-            @Override
-            public int getParEncoderPosition() {
-                return pl.driver.getEncoderX();
-            }
-
-            @Override
-            public int getPerpEncoderPosition() {
-                return pl.driver.getEncoderY();
-            }
-
-            @Override
-            public float getHeadingVelocity() {
-                return (float) pl.driver.getHeadingVelocity();
-            }
-
-            @Override
-            public void setParDirection(@NonNull DcMotorSimple.Direction direction) {
-                parDirection = direction == DcMotorSimple.Direction.FORWARD ?
-                        GoBildaPinpointDriver.EncoderDirection.FORWARD :
-                        GoBildaPinpointDriver.EncoderDirection.REVERSED;
-                pl.driver.setEncoderDirections(parDirection, perpDirection);
-            }
-
-            @Override
-            public void setPerpDirection(@NonNull DcMotorSimple.Direction direction) {
-                perpDirection = direction == DcMotorSimple.Direction.FORWARD ?
-                        GoBildaPinpointDriver.EncoderDirection.FORWARD :
-                        GoBildaPinpointDriver.EncoderDirection.REVERSED;
-                pl.driver.setEncoderDirections(parDirection, perpDirection);
-            }
-        };
-    }
+//    private static PinpointView makePinpointView(PinpointLocalizer pl) {
+//        return new PinpointView() {
+//            GoBildaPinpointDriver.EncoderDirection parDirection = pl.initialParDirection;
+//            GoBildaPinpointDriver.EncoderDirection perpDirection = pl.initialPerpDirection;
+//
+//            @Override
+//            public void update() {
+//                pl.driver.update();
+//            }
+//
+//            @Override
+//            public int getParEncoderPosition() {
+//                return pl.driver.getEncoderX();
+//            }
+//
+//            @Override
+//            public int getPerpEncoderPosition() {
+//                return pl.driver.getEncoderY();
+//            }
+//
+//            @Override
+//            public float getHeadingVelocity() {
+//                return (float) pl.driver.getHeadingVelocity();
+//            }
+//
+//            @Override
+//            public void setParDirection(@NonNull DcMotorSimple.Direction direction) {
+//                parDirection = direction == DcMotorSimple.Direction.FORWARD ?
+//                        GoBildaPinpointDriver.EncoderDirection.FORWARD :
+//                        GoBildaPinpointDriver.EncoderDirection.REVERSED;
+//                pl.driver.setEncoderDirections(parDirection, perpDirection);
+//            }
+//
+//            @Override
+//            public void setPerpDirection(@NonNull DcMotorSimple.Direction direction) {
+//                perpDirection = direction == DcMotorSimple.Direction.FORWARD ?
+//                        GoBildaPinpointDriver.EncoderDirection.FORWARD :
+//                        GoBildaPinpointDriver.EncoderDirection.REVERSED;
+//                pl.driver.setEncoderDirections(parDirection, perpDirection);
+//            }
+//        };
+//    }
 
     @OpModeRegistrar
     public static void register(OpModeManager manager) {
@@ -157,16 +157,16 @@ public final class TuningOpModes {
                     perpEncs.add(new EncoderRef(0, 1));
                     lazyImu = new OTOSIMU(ol.otos);
 
-                    manager.register(metaForClass(OTOSAngularScalarTuner.class), new OTOSAngularScalarTuner(ol.otos));
-                    manager.register(metaForClass(OTOSLinearScalarTuner.class), new OTOSLinearScalarTuner(ol.otos));
-                    manager.register(metaForClass(OTOSHeadingOffsetTuner.class), new OTOSHeadingOffsetTuner(ol.otos));
-                    manager.register(metaForClass(OTOSPositionOffsetTuner.class), new OTOSPositionOffsetTuner(ol.otos));
+//                    manager.register(metaForClass(OTOSAngularScalarTuner.class), new OTOSAngularScalarTuner(ol.otos));
+//                    manager.register(metaForClass(OTOSLinearScalarTuner.class), new OTOSLinearScalarTuner(ol.otos));
+//                    manager.register(metaForClass(OTOSHeadingOffsetTuner.class), new OTOSHeadingOffsetTuner(ol.otos));
+//                    manager.register(metaForClass(OTOSPositionOffsetTuner.class), new OTOSPositionOffsetTuner(ol.otos));
                 }  else if (md.localizer instanceof PinpointLocalizer) {
-                    PinpointView pv = makePinpointView((PinpointLocalizer) md.localizer);
-                    encoderGroups.add(new PinpointEncoderGroup(pv));
+//                    PinpointView pv = makePinpointView((PinpointLocalizer) md.localizer);
+//                    encoderGroups.add(new PinpointEncoderGroup(pv));
                     parEncs.add(new EncoderRef(0, 0));
                     perpEncs.add(new EncoderRef(0, 1));
-                    lazyImu = new PinpointIMU(pv);
+//                    lazyImu = new PinpointIMU(pv);
                 } else {
                     throw new RuntimeException("unknown localizer: " + md.localizer.getClass().getName());
                 }
@@ -239,11 +239,11 @@ public final class TuningOpModes {
                     parEncs.add(new EncoderRef(0, 0));
                     perpEncs.add(new EncoderRef(0, 1));
                 }  else if (td.localizer instanceof PinpointLocalizer) {
-                    PinpointView pv = makePinpointView((PinpointLocalizer) td.localizer);
-                    encoderGroups.add(new PinpointEncoderGroup(pv));
+//                    PinpointView pv = makePinpointView((PinpointLocalizer) td.localizer);
+//                    encoderGroups.add(new PinpointEncoderGroup(pv));
                     parEncs.add(new EncoderRef(0, 0));
                     perpEncs.add(new EncoderRef(0, 1));
-                    lazyImu = new PinpointIMU(pv);
+//                    lazyImu = new PinpointIMU(pv);
                 } else if (td.localizer instanceof OTOSLocalizer) {
                     OTOSLocalizer ol = (OTOSLocalizer) td.localizer;
                     encoderGroups.add(new OTOSEncoderGroup(ol.otos));
@@ -251,10 +251,10 @@ public final class TuningOpModes {
                     perpEncs.add(new EncoderRef(0, 1));
                     lazyImu = new OTOSIMU(ol.otos);
 
-                    manager.register(metaForClass(OTOSAngularScalarTuner.class), new OTOSAngularScalarTuner(ol.otos));
-                    manager.register(metaForClass(OTOSLinearScalarTuner.class), new OTOSLinearScalarTuner(ol.otos));
-                    manager.register(metaForClass(OTOSHeadingOffsetTuner.class), new OTOSHeadingOffsetTuner(ol.otos));
-                    manager.register(metaForClass(OTOSPositionOffsetTuner.class), new OTOSPositionOffsetTuner(ol.otos));
+//                    manager.register(metaForClass(OTOSAngularScalarTuner.class), new OTOSAngularScalarTuner(ol.otos));
+//                    manager.register(metaForClass(OTOSLinearScalarTuner.class), new OTOSLinearScalarTuner(ol.otos));
+//                    manager.register(metaForClass(OTOSHeadingOffsetTuner.class), new OTOSHeadingOffsetTuner(ol.otos));
+//                    manager.register(metaForClass(OTOSPositionOffsetTuner.class), new OTOSPositionOffsetTuner(ol.otos));
                 } else {
                     throw new RuntimeException("unknown localizer: " + td.localizer.getClass().getName());
                 }

@@ -5,13 +5,13 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class MecanumDrive {
+public class Mecanum {
     DcMotorEx frontLeft;
     DcMotorEx backLeft;
     DcMotorEx frontRight;
     DcMotorEx backRight;
 
-    public MecanumDrive(HardwareMap HW) {
+    public Mecanum(HardwareMap HW) {
         frontLeft = HW.get(DcMotorEx.class,"frontLeft");
         backLeft = HW.get(DcMotorEx.class,"backLeft");
         frontRight =HW.get(DcMotorEx.class,"frontRight");

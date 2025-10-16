@@ -14,6 +14,10 @@ public class Arm {
         arm.setPosition(arm.getPosition() + 0.005);
     }
 
+    public void setPosition(double position) {
+        arm.setPosition(position);
+    }
+
     public void moveArmDown() {
         arm.setPosition(arm.getPosition() - 0.005);
     }
